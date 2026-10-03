@@ -1,0 +1,222 @@
+@use "@/assets/scss/style" as *;
+.header {
+  position: sticky;
+  top: 0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-color: hsla(0, 0%, 100%, 0.9);
+  }
+  z-index: 999;
+  &__body {
+    padding-block: 35px;
+
+    padding-inline: clamp(10px, 5vw, 40px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1000;
+  }
+  &__logo {
+    text-transform: uppercase;
+    font-size: 24px;
+    line-height: 1.1;
+    letter-spacing: 0;
+    transition: color 0.3s ease;
+    &:hover {
+      color: $primaryColor;
+    }
+  }
+
+  &__menu-button {
+    position: relative;
+    height: 23px;
+    width: 50px;
+    cursor: pointer;
+
+    transition:
+      height 0.3s ease,
+      transform 0.3s ease,
+      background-color 0.3s ease;
+
+    span {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 35px;
+      height: 1px;
+      background-color: $secondaryColor;
+      transition:
+        width 0.3s ease,
+        transform 0.3s ease,
+        background-color 0.3s ease;
+    }
+    small {
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        opacity: 0;
+        width: 0px;
+        height: 0px;
+        border: 1px solid $secondaryColor;
+        border-radius: 50%;
+        transition:
+          height 0.3s ease,
+          width 0.3s ease,
+          opacity 0.3s ease;
+      }
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 45px;
+      translate: 0 -50%;
+      height: 1px;
+      background-color: $secondaryColor;
+      transition:
+        width 0.3s ease,
+        transform 0.3s ease,
+        background-color 0.3s ease;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      width: 50px;
+      translate: 0 50%;
+      height: 1px;
+      background-color: $secondaryColor;
+      transition:
+        width 0.3s ease,
+        transform 0.3s ease,
+        background-color 0.3s ease;
+    }
+
+    &--open {
+      height: 1px;
+      span {
+        width: 0;
+      }
+
+      small {
+        &::after {
+          width: 0px;
+          height: 0px;
+          @media (min-width: $mobile) {
+            width: 200px;
+            height: 200px;
+          }
+          opacity: 1;
+        }
+      }
+
+      &::before {
+        width: 45px;
+        transform: rotate(45deg);
+      }
+      &::after {
+        width: 45px;
+        transform: rotate(-45deg);
+        translate: 0 50%;
+      }
+    }
+    @media (hover: hover) {
+      &:hover {
+        span {
+          background-color: $primaryColor;
+        }
+        small {
+          &::after {
+            border-color: $primaryColor;
+          }
+        }
+
+        &::before {
+          background-color: $primaryColor;
+        }
+        &::after {
+          background-color: $primaryColor;
+        }
+      }
+    }
+  }
+  &__menu-button-line {
+  }
+  .menu {
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    pointer-events: none;
+    opacity: 0;
+    padding-top: 78px;
+    padding-bottom: 40px;
+    transition:
+      background-color 0.3s ease,
+      opacity 0.3s ease;
+
+    &--open {
+      background-color: #ffffff;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      gap: 40px;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 50px;
+      transition: all 0.3s ease;
+      counter-reset: list;
+    }
+
+    &__list-item {
+      counter-increment: list;
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      gap: clamp(20px, 4vw, 50px);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      font-size: 100px;
+      font-size: clamp(40px, 8vw, 100px);
+      line-height: 1.1;
+      letter-spacing: 0;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: $primaryColor;
+      }
+
+      &::before {
+        content: counter(list, decimal-leading-zero);
+        font-size: clamp(20px, 5vw, 30px);
+        line-height: 1.2;
+        letter-spacing: 0;
+        color: $primaryColor;
+      }
+    }
+  }
+}
